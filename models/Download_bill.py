@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import pyautogui
+import pandas as pd
+import requests
+import os
 
 class Download_bill(Bot):
     
@@ -96,3 +99,73 @@ class Download_bill(Bot):
         input("Digite qualquer tecla para finalizar: ")
         self.driver.quit()
 
+class Download_bill_v2():
+    """Downloads customer bills using the link provided in the bill-addresses.xlsx"""
+
+    def _ask_folder_path(self) -> str:
+        """
+            Prompts the user for the destination folder path of downloaded files and validates the address.
+
+            Output:
+                - A string containing the variable's address if the path is valid.
+                - An empty string if the user chooses to exit the system.
+        """
+
+        while True:
+            url = input("Informe o endereço da pasta de destino dos downloads (Sem Aspas): ")
+
+            if url == "2":
+                print("Voltando ao menu de seleção.")
+                return ""
+            
+            if os.path.exists(url):
+                return url
+            
+            print("Endereço de pasta inválido! Por favor, tente novamente ou digite dois para voltar ao menu de seleção.")
+
+
+    def run_download(self) -> None:
+        """Script designed to automate the bill download process"""
+
+        #Stores the data extracted from the spreadsheet
+        url_excel_file = f'{os.getcwd()}/excel_tables/table-with-the-bill-addresses/bill-addresses.xlsx'
+        df = pd.read_excel(url_excel_file)
+
+        name_document_column = "Numero_Documento"
+        links_bill_column = "Boleto"
+
+        #Prompts the user to specify the destination folder the downloaded bills
+        save_folder_path_url = self._ask_folder_path()
+        if not save_folder_path_url:
+            return
+
+        #Iterates through the list and download bills one by one
+        for index, row in df.iterrows():
+
+            #Check if the column containing the document name and the invoice link is present in the spreadsheet.
+            try:
+                document_name = row[name_document_column]
+                link_bill = row[links_bill_column]
+
+            except Exception as e:
+                print(f" Coluna {e} não encontrada! Por favor, tente novamente.")
+                return    
+
+            #Check if the link exists.
+            if not link_bill:
+                print(f"{document_name}: não possui link de downlod do boleto.")
+                continue
+
+            #Download the bill and save them in the selected folder. 
+            try:
+                request = requests.get(link_bill)
+                request.raise_for_status()
+
+                new_file_name = f"{save_folder_path_url}\\{document_name}.pdf"
+                with open(new_file_name, "wb") as f:
+                    f.write(request.content)
+                
+            except Exception as e:
+                print(f"Erro ao baixar o link {link_bill}: {e}")
+        
+        print("Download dos Boletos Finalizados!")

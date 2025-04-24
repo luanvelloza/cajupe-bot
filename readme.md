@@ -20,7 +20,8 @@
    - 3.2 [Baixar boletos (Download_bills)](#32-baixar-boletos-download_bills)
      - 3.2.1 [Contexto e solução do Problema](#321-contexto-e-solução-do-problema)
      - 3.2.2 [Como usar](#322-como-usar)
-       - 3.2.2.1 [Execução do programa](#3221-execução-do-programa)
+       - 3.2.2.1 [Preparando a planilha de referência](#3221-preparando-a-planilha-de-referência)
+       - 3.2.2.2 [Execução do programa](#3222-execução-do-programa)
    - 3.3 [Baixar folhas de ponto (Download_timesheets)](#33-baixar-folhas-de-ponto-download_timesheets)
      - 3.3.1 [Contexto e Solução do Problema](#331-contexto-e-solução-do-problema)
      - 3.3.2 [Como usar](#332-como-usar)
@@ -58,7 +59,7 @@ Primeiro, clone o repositório do projeto para o seu ambiente local:
 
 ```bash
 git clone https://github.com/luanvelloza/cajupe-bot.git
-cd seu-repositorio
+cd cajupe-bot
 ```
 
 ### **2.3. Passo 2: Criar um ambiente virtual (venv)**
@@ -192,7 +193,25 @@ O Cajupe Bot baixa os boletos de forma individual sem precisar de intervenção 
 
 #### **3.2.2. Como usar:**
 
-##### **3.2.2.1. Execução do programa**
+##### **3.2.2.1. Preparando a planilha de referência**
+
+1. **Faça login no sistema do Cajupe:**
+- Abra o sistema do cajupe e insira suas credenciais de login no sistema Cajupe.
+
+2. **Acesse o módulo "Documento faturamento":**
+- Após o login, navegue até o módulo **"Documento faturamento"** no sistema Cajupe.
+
+3. **Filtre por data:**
+- No sistema, insira o período de emissão dos boletos que deseja baixar.
+
+4. **Exportar e Renomear**
+- Clique no botão Exportar para iniciar o processo de download.
+
+- Após a conclusão do download, abra o arquivo e salve-o no formato `.xlsx`, renomeando-o como `bill-addresses.xlsx.`
+
+- Salve o arquivo na pasta especificada: `./excel_tables/table-with-the-bill-addresses.`
+
+##### **3.2.2.2. Execução do programa**
 
 1. **Ative o ambiente virtual**:
    - No **Linux/macOS**, use:
@@ -214,30 +233,15 @@ O Cajupe Bot baixa os boletos de forma individual sem precisar de intervenção 
 
 - Digite o número correspondente à funcionalidade desejada (Baixar Boletos (Faturamento)).
 
-4. **Faça login no sistema:**
-- Um navegador será aberto automaticamente.
+4. **Escreva o link da pasta de destino:**
+- Digite o caminho completo da pasta de destino sem utilizar aspas. Exemplo: `C:\User\Área de Trabalho\Boletos.`
 
-- Insira suas credenciais de login no sistema Cajupe.
+- Se desejar sair, basta digitar `2`.
 
-5. **Acesse o módulo "Documento faturamento":**
-- Após o login, navegue até o módulo **"Documento faturamento"** no sistema Cajupe.
+5. **Conclusão:**
+- O Cajupe Bot iniciará o download dos boletos, utilizando como referência a planilha previamente preparada.
 
-6. **Filtre por data:**
-- No sistema, insira o período de emissão dos boletos que deseja baixar.
-
-7. **Configure a pasta de download**
-- Acesse as configurações do navegador e ajuste para que ele pergunte o local de destino ao baixar arquivos.
-
-- Certifique-se de selecionar uma pasta de fácil acesso para armazenar os boletos.
-
-8. **Inicie a automação**
-- No console do terminal, pressione **qualquer tecla** para iniciar o processo de automação.
-
-9. **Conclusão:**
-
-- O Cajupe Bot executará automaticamente o download dos boletos.
-
-- Aguarde até que o processo seja concluído e verifique os boletos na pasta de download selecionada.
+- Aguarde até que o processo seja finalizado e, em seguida, verifique os boletos na pasta de download selecionada.
 
 ### **3.3. Baixar folhas de ponto (Download_timesheets)**
 
@@ -459,3 +463,4 @@ Verifique se não há formatos inconsistentes, pois isso pode causar erros duran
 - **Python:** Linguagem de programação principal.
 - **Selenium:** Automação de navegador.
 - **PyAutoGUI:** Automação de interface gráfica.
+- **Pandas:** Extração de dados.

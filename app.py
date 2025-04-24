@@ -1,7 +1,7 @@
 import os
 from models.Apportion_accounts_payable import Apportion_accounts_payable
 from models.Download_timesheets import Download_timesheets
-from models.Download_bill import Download_bill
+from models.Download_bill import Download_bill_v2
 from models.Update_service_values_on_billing_page import Update_service_values_on_billing_page
 from models.Update_billing_tax_info import Update_billing_tax_info
 
@@ -29,11 +29,11 @@ def selection_menu():
     main_menu()
 
 def main_menu():
-    number = int(input("select a number: "))
+    number = int(input("Selecione um numero: "))
     match number:
         case 1:
-            bot = Download_bill()
-            bot.run_bot()
+            bot = Download_bill_v2()
+            bot.run_download()
         case 2:
             bot = Download_timesheets()
             bot.run_bot()
