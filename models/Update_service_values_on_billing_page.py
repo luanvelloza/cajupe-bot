@@ -147,12 +147,6 @@ class Update_service_values_on_billing_page(Bot):
             self._click_btn("//div[@class='v-card v-sheet theme--light']//button[2]")
             time.sleep(1)
 
-            #Click the "Save" button on the value confirmation card.
-            if self._check_Element("//div[@class='swal2-actions']", 300):
-                self._click_btn("//div[@class='swal2-actions']//button[@class='swal2-confirm swal2-styled']")
-            else:
-                break
-
             #Click the "Save" button to save the service changes.
             self._click_btn("//button[@type='submit']")
             time.sleep(0.5)
