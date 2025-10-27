@@ -49,7 +49,7 @@ Siga os passos abaixo para configurar e executar o projeto em sua máquina.
 
 ### **2.1. Pré-requisitos**
 
-Antes de começar, verifique se você tem o Python e o pip instalados em sua máquina. Além disso, é essencial que o Chromedriver esteja instalado e configurado corretamente.
+Antes de começar, verifique se você tem o Python (3.12) e o pip instalados em sua máquina. Além disso, é essencial que o Chromedriver esteja instalado e configurado corretamente.
 
 Se precisar de ajuda para instalar o Chromedriver, consulte este guia detalhado: [Como instalar o Chromedriver no Windows 10](https://pt.linkedin.com/pulse/como-instalar-o-chromedriver-windows-10-jo%C3%A3o-gross).
 
