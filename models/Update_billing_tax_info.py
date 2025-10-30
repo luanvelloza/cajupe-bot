@@ -39,7 +39,7 @@ class Update_billing_tax_info(Bot):
                 total_value = f'{total_value:.2f}0'
                 vt = f'{(vt*100):.4f}'
                 va = f'{(va*100):.4f}'
-                inss_base = f'{(inss_base*100):.4f}'
+                inss_base = f'{(inss_base*100):.5f}'
                 net_value = f'{net_value:.2f}'
 
                 list_temp.append({
