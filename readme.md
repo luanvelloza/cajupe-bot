@@ -177,6 +177,7 @@ Verifique se não há formatos inconsistentes ou células vazias na planilha, po
 
 - O Cajupe Bot executará automaticamente a inserção dos valores rateados com base na planilha de referência.
 - Aguarde até que o processo seja concluído e verifique os resultados no sistema.
+- Após a conferência, digite 1 para repetir o processo (atualizando a planilha com as novas informações) ou qualquer outra tecla para encerrar.
 
 
 ### **3.2. Baixar boletos (Download_bills)**
