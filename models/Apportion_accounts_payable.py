@@ -131,31 +131,67 @@ class Apportion_accounts_payable(Bot):
 
         wb.save(f'{url}{name}')
 
-    def run_bot(self) -> None:
-        self.init_driver()
-        list_temp = self._take_excel_file(f'{os.getcwd()}/excel_tables/tables-with-the-apportionment-values/apportionment-values.xlsx')
-        self.open_site()
-        error_list = []
-        list_length = len(list_temp)
-        i = 1
+    def _pick_the_values_and_insert(self) -> None:
+        """
+            Insert apportionment values from Excel into the system
 
-        for item in list_temp:
+            Process:
+                - Read client IDs and values from the Excel file
+                - For each item:
+                    * Search client by ID
+                    * If active, insert the value and confirm
+                    * If not found, cancel and log the error
+                - Generate an Excel table with errors
+                - Ask user whether to retry or finish
+        """
 
-            print(f'{i}/{list_length} | Nome do Cliente: {item["id"]} | Valor: {item["value"]} | Numero de erros: {len(error_list)}')
-            i += 1
-            self._open_filter()
-            self._write_name(item["id"])
-            check = self._check_Element("//tbody//tr[@class='ATIVO']", 2)
-            
-            if check:
-                self._click_name_element()
-                self._write_value_element(item["value"])
-                self._click_confirm()
+        while True:
+            list_temp = self._take_excel_file(f'{os.getcwd()}/excel_tables/tables-with-the-apportionment-values/apportionment-values.xlsx')
+            error_list = []
+            list_length = len(list_temp)
+            i = 1
+
+            for item in list_temp:
+
+                print(f'{i}/{list_length} | Nome do Cliente: {item["id"]} | Valor: {item["value"]} | Numero de erros: {len(error_list)}')
+                i += 1
+                self._open_filter()
+                self._write_name(item["id"])
+                check = self._check_Element("//tbody//tr[@class='ATIVO']", 2)
+                
+                if check:
+                    self._click_name_element()
+                    self._write_value_element(item["value"])
+                    self._click_confirm()
+                else:
+                    self._cancel_btn()
+                    error_list.append({"id":item["id"], "value":item["value"]})
+
+            self._make_a_table(f'{os.getcwd()}/excel_tables/tables-with-the-apportionment-values/', error_list, 'to-correct.xlsx')
+
+            choice = input("Digite 1 para continuar (3s) ou qualquer outra tecla para finalizar: ")
+            if choice == '1':
+                self.time_sleep_count(3)
+                continue
             else:
-                self._cancel_btn()
-                error_list.append({"id":item["id"], "value":item["value"]})
+                break
 
-        self._make_a_table(f'{os.getcwd()}/excel_tables/tables-with-the-apportionment-values/', error_list, 'to-correct.xlsx')
+    def run_bot(self) -> None:
+        """
+            Run the automation bot to insert apportionment values
 
-        input("Digite qualquer tecla para finalizar: ")
+            Process:
+                - Initialize Selenium WebDriver
+                - Open target site
+                - Execute the insertion routine (_pick_the_values_and_insert)
+                - Close the browser session
+
+            Output:
+                - Automated process completed
+                - Browser session terminated
+        """
+
+        self.init_driver()
+        self.open_site()
+        self._pick_the_values_and_insert()
         self.driver.quit()
