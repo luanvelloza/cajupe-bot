@@ -69,7 +69,7 @@ class Update_billing_tax_info(Bot):
         for tr in tr_list:
             td_list = tr.find_elements(By.XPATH, ".//td")
             if td_list[0].text == value:
-                btn_element = tr.find_element(By.XPATH, ".//button[@title='Editar']")
+                btn_element = tr.find_element(By.XPATH, ".//button[@name='editBtn']")
                 btn_element.click()
                 break
     
@@ -153,8 +153,8 @@ class Update_billing_tax_info(Bot):
             time.sleep(0.5)
             
             #Click the confirmation button on the save confirmation card.
-            if self._check_Element("//button[@id='btn-modal-sucesso-nao']", 300):
-                self._click_btn("//button[@id='btn-modal-sucesso-nao']")
+            if self._check_Element("//div[@class='v-card v-sheet theme--light']", 300):
+                self._click_btn("//div[@class='v-card v-sheet theme--light']//button[@id='btn-modal-sucesso-nao']")
             else:
                 break
             time.sleep(3)

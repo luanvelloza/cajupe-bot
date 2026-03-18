@@ -69,18 +69,19 @@ class Update_service_values_on_billing_page(Bot):
         for tr in tr_list:
             td_list = tr.find_elements(By.XPATH, ".//td")
             if td_list[0].text == value:
-                btn_element = tr.find_element(By.XPATH, ".//button[@title='Editar']")
+                btn_element = tr.find_element(By.XPATH, ".//button[@name='editBtn']")
                 btn_element.click()
                 break
     
     def _check_services_and_click_edit_btn(self) -> None:
         #Review the services list and select "CONTRATO" for value edit.
-        input = self.driver.find_element(By.XPATH, "//div[@class='listagem-finais']//div[@class='v-text-field__slot']//input")
+        input = self.driver.find_element(By.XPATH, "//div[@class='listagem-finais loading-container']//div[@class='v-text-field__slot']//input")
         input.click()
         time.sleep(0.2)
         input.send_keys(Keys.CONTROL, 'a')
-        time.sleep(0.3)
+        time.sleep(0.2)
         input.send_keys('CONTRATO')
+        time.sleep(1)
 
         tr_list = self.driver.find_elements(By.XPATH, "//tr[@class='ATIVO']")
         for tr in tr_list:
@@ -152,8 +153,8 @@ class Update_service_values_on_billing_page(Bot):
             time.sleep(0.5)
             
             #Click the confirmation button to save the service changes.
-            if self._check_Element("//button[@id='btn-modal-sucesso-nao']", 300):
-                self._click_btn("//button[@id='btn-modal-sucesso-nao']")
+            if self._check_Element("//div[@class='v-card v-sheet theme--light']", 300):
+                self._click_btn("//div[@class='v-card v-sheet theme--light']//button[@id='btn-modal-sucesso-nao']")
             else:
                 break
             time.sleep(3)
