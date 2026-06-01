@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from openpyxl import load_workbook
 import time
 import os
+from selenium.webdriver.support import expected_conditions as EC
 
 class Update_service_values_on_billing_page(Bot):
     """Update the service value in the Service Parameterization module."""
@@ -113,7 +114,27 @@ class Update_service_values_on_billing_page(Bot):
             wait = WebDriverWait(self.driver, timeout=time)
             return wait.until(lambda d: self.driver.find_element(By.XPATH, xpath).is_displayed())
         except:
-            return False  
+            return False
+        
+    def _wait_Element_Disappear(self, xpath: str, time: int) -> bool:
+        '''
+            Check if the element disappears from DOM or becomes invisible
+        
+            Input:
+                - xpath - str - (element's xpath)
+                - time - int - (How much time to wait for disappearance)
+
+            Output:
+                - True - (element disappeared)
+                - False - (element still present after timeout)
+        '''
+        
+        try:
+            wait = WebDriverWait(self.driver, timeout=time)
+            return wait.until(EC.invisibility_of_element_located((By.XPATH, xpath)))
+            
+        except:
+            return False
 
     def run_bot(self):
         self.init_driver()
@@ -133,7 +154,8 @@ class Update_service_values_on_billing_page(Bot):
             
             #Check if the element was found and click the "Edit" button.
             if self._check_Element("//tr[@class='ATIVO']", 300):
-                self._check_elements_and_click_edit_btn(item['name'])
+                if self._wait_Element_Disappear("//div[@class='loading-card']", 300):
+                    self._check_elements_and_click_edit_btn(item['name'])
             time.sleep(1)
             
             #Filter by the name "Contract" and click the "Edit" button.
