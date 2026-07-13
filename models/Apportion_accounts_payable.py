@@ -18,7 +18,7 @@ class Apportion_accounts_payable(Bot):
     def _write_name(self, name: str) -> None:
         """Write customer's name in the filter"""
         time.sleep(0.5)
-        input = self.driver.find_element(By.XPATH, "//div[@id='exportar']/ancestor::div[@role='dialog']//div[@class='v-text-field__slot']/input")
+        input = self.driver.find_element(By.XPATH, "//label[text()='Centro de Custo']/following::input[1]")
         input.click()
         input.send_keys(Keys.CONTROL, 'a')
         time.sleep(0.5)
@@ -46,7 +46,7 @@ class Apportion_accounts_payable(Bot):
     def _click_name_element(self, id: str) -> None:
         """Click on the single element on the screen."""
         time.sleep(1)
-        bnt = self.driver.find_element(By.XPATH, f"//div[@id='exportar']/ancestor::div[@role='dialog']//td[text()='{id}']")
+        bnt = self.driver.find_element(By.XPATH, f"//span[text()='{id}']")
         bnt.click()
 
     def _write_value_element(self, value: str) -> None:
@@ -157,7 +157,7 @@ class Apportion_accounts_payable(Bot):
                 i += 1
                 self._open_filter()
                 self._write_name(item["id"])
-                check = self._check_Element(f"//div[@id='exportar']/ancestor::div[@role='dialog']//td[text()='{item['id']}']", 2)
+                check = self._check_Element(f"//span[text()='{item['id']}']", 25)
                 if check:
                     self._click_name_element(item["id"])
                     self._write_value_element(item["value"])
