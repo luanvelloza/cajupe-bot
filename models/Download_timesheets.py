@@ -40,7 +40,7 @@ class Download_timesheets(Bot):
     def _wait_element_load(self) -> None:
         """Wait for the element to load."""
         try:
-            wait = WebDriverWait(self.driver, timeout=300)
+            wait = WebDriverWait(self.driver, timeout=3000)
             wait.until(lambda d:(self.driver.find_element(By.XPATH, "//div[@class='swal2-success-ring']")).is_displayed)
             time.sleep(2)
         except:
