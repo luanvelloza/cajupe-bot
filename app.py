@@ -1,7 +1,7 @@
 import os
 from models.Apportion_accounts_payable import Apportion_accounts_payable
 from models.Download_timesheets import Download_timesheets
-from models.Download_bill import Download_bill_v2
+from models.Billing_document_organizer import BillingDocumentOrganizer
 from models.Update_service_values_on_billing_page import Update_service_values_on_billing_page
 from models.Update_billing_tax_info import Update_billing_tax_info
 
@@ -14,7 +14,7 @@ def selection_menu():
     Selecione um numero:
     
     Documentos do Faturamento:
-        1. Baixar Boletos (Faturamento);
+        1. Organizar Arquivos: NFs, Boletos, XMLs (Faturamento);
         2. Baixar Folhas de Ponto (Cálculo de Ponto);
         3. Inserir Valores dos Serviços (Parametrização de Serviços);
         4. Inserir Taxas dos Serviços (Parametrização Fiscal).
@@ -32,8 +32,8 @@ def main_menu():
     number = int(input("Selecione um numero: "))
     match number:
         case 1:
-            bot = Download_bill_v2()
-            bot.run_download()
+            bot = BillingDocumentOrganizer()
+            bot.run_bot()
         case 2:
             bot = Download_timesheets()
             bot.run_bot()
