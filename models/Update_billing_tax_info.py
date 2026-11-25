@@ -141,7 +141,11 @@ class Update_billing_tax_info(Bot):
             i += 1
 
             #Search for the element in the filter.
-            self._write_value_in_an_element("//div[@class='col-md-5 col-12']//input", item['fiscalName'])
+            self._write_value_in_an_element("//input[@name='descricao']", item['fiscalName'])
+            time.sleep(2)
+
+            #click in the filter butotn
+            self._click_btn("//div[@id='exportar']//button")
             time.sleep(2)
             
             #Check the list and select the element with the same name.

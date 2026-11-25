@@ -149,7 +149,7 @@ class Update_service_values_on_billing_page(Bot):
             i += 1
 
             #Search for the client in the filter.
-            self._write_value_in_an_element("//div[@class='col-md-5 col-12']//input", item['name'])
+            self._write_value_in_an_element("//input[@name='descricao']", item['name'])
             time.sleep(2)
             
             #Check if the element was found and click the "Edit" button.
@@ -179,7 +179,7 @@ class Update_service_values_on_billing_page(Bot):
                 self._click_btn("//div[@class='v-card v-sheet theme--light']//button[@id='btn-modal-sucesso-nao']")
             else:
                 break
-            time.sleep(3)
+            time.sleep(2)
 
         input("Digite qualquer tecla para finalizar: ")
         self.driver.quit()
